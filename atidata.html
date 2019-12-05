@@ -1,0 +1,551 @@
+<!doctype html>
+<html>
+<head>
+ <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+
+<!--CSS -->
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+<style>
+        
+    body {
+    padding: 2em;
+    text-align: center;
+    }
+        
+    label {
+    font-size: 120%;
+    }
+    
+
+    .container {
+        width: 60%;
+        height: 50%;
+        padding: 5px;
+    }
+        
+    .container-fluid {
+            font-family: 'Quicksand', sans-serif;
+    }
+    
+    .clickable {
+        cursor: pointer;
+        text-decoration: underline; 
+    }
+    
+    .small {
+        font-size: 70%;
+    }
+    
+    .big {
+        font-size: 130%;
+    }
+    
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 98%;
+      text-align: right;
+    }
+    
+    #error {
+        color:red;
+    }
+        
+    h1 a {
+      color: inherit; /* blue colors for links too */
+      text-decoration: inherit; /* no underline */
+    }
+    
+    h1 a:hover, a:active {
+      text-decoration: none;
+      color: inherit; 
+    }
+    
+    label a {
+      color: inherit; /* blue colors for links too */
+      text-decoration: inherit; /* no underline */
+    }
+    
+    label a:hover, a:active {
+      text-decoration: none;
+      color: inherit; 
+    }
+        
+</style>
+ 
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+<!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-bundle.js"></script>
+    <script src="https://unpkg.com/tone"></script>
+    <script src="https://unpkg.com/@tonejs/ui"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    
+
+    
+</head>
+
+<body>
+    
+    <div class="container-fluid">
+        <h1><a href="index.html">Data Sonification</a></h1>
+        <p>Have you ever wondered what the evolution of your data points sounds like?</p>
+        <br>
+        
+
+  <div class="row">
+    <div class="col-sm-3">
+  
+    </div>
+    <div class="col-sm-3">
+      <a href="datainput.html" class="btn btn-outline-secondary" id="buttonOwnData" role="button">Use Your Own Data</a>
+    </div>
+    <div class="col-sm-3">
+      <a href="atidata.html" class="btn btn-success" id="buttonAtiData" role="button">Get AT Internet Data</a>
+    </div>
+    <div class="col-sm-3">
+
+    </div>
+  </div>
+<br><hr><br>
+        
+ 
+<div class="row">
+    <div class="col-sm-3">
+  
+    </div>
+    <div class="col-sm-6">
+      <form>
+          
+          <div class="form-group">
+            <label for="inputAccessKey"><a href="https://helpcentre.atinternet-solutions.com/hc/en-gb/articles/360008912079-Access-rights-related-topics#APIkeysforexternalauthentications" target="_blank">API Access Key</a></label>
+            <input type="text" class="form-control" id="inputAccessKey" placeholder="g854d299v349">
+          </div>
+
+          <div class="form-group">
+              <label for="inputSecretKey"><a href="https://helpcentre.atinternet-solutions.com/hc/en-gb/articles/360008912079-Access-rights-related-topics#APIkeysforexternalauthentications" target="_blank">API Secret Key</a></label>
+            <input type="password" class="form-control" id="inputSecretKey" placeholder="e5647cd1g04d87q37g5g822ha4f5137de40838a5">
+          </div>
+          <!--
+          <div class="form-group">
+            <label for="inputUser">User</label>
+            <input type="text" class="form-control" id="inputUser" value="nicolas.hinternesch@atinternet.com">
+          </div>
+          <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" id="inputPassword" value="Smarttag2016.">
+          </div>
+          -->
+          <div class="form-group">
+            <label for="inputLevel1">Level 1 Site ID</label>
+            <input type="text" class="form-control" id="inputLevel1" placeholder="123456">
+          </div>
+          <div class="form-group">
+            <label for="selectMetric">Metric</label>
+            <select class="form-control" id="selectMetric">
+              <option>Visits</option>
+              <option>Sales</option>
+              <option>Conversions</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="selectPeriod">The Last ... Days</label>
+            <select class="form-control" id="selectPeriod">
+              <option>30</option>
+              <option>60</option>
+              <option>90</option>
+            </select>
+          </div>
+      </form>
+    </div>
+    <div class="col-sm-3">
+
+    </div>
+  </div>
+        
+
+        
+    <br>
+
+    <button type="button" class="btn btn-primary" id="renderBtn">Visualize</button><br>
+    <div id="error"></div><br>
+    <button type="button" class="btn btn-primary" id="resetButton">Reset</button><br><br><br>
+        
+    <div class="container">
+        <canvas id="myChart"></canvas>
+        <br>
+    </div>
+    
+    
+        
+        
+        
+        <button type="button" class="btn btn-success" id="button">Sonify</button>
+        
+        <br><br>
+        
+        <button type="button" class="btn btn-danger btn-sm" id="buttonStop">Stop</button>
+
+    
+    
+    
+    
+    <p class="footer">By <a href="http://hinternesch.com" target="_blank">Nicolas Hinternesch</a></p>
+    
+    </div> <!-- close container-fluid -->
+    
+   
+    
+    
+    
+
+
+<script>
+    
+    
+    $('.container').css("height","0px");
+    $('#buttonStop').hide();
+    $('#button').hide();
+    $('#resetButton').hide();
+    
+    var notesLookup = { 
+         "0.05": "C3", 
+         "0.10": "D3",
+         "0.15": "E3",
+         "0.20": "F3",
+         "0.25": "G3",
+         "0.30": "A3",
+         "0.35": "H3",
+         "0.40": "C4",
+         "0.45": "D4",
+         "0.50": "E4",
+         "0.55": "F4",
+         "0.60": "G4",
+         "0.65": "A4",
+         "0.70": "H4",
+         "0.75": "C5",
+         "0.80": "D5",
+         "0.85": "E5",
+         "0.90": "F5",
+         "0.95": "G5",
+         "1.00": "A5"
+    };
+    
+       var metricLookup = { 
+         "Conversions": "m_conversions1_visits", 
+         "Sales": "m_sales",
+         "Visits": "m_visits"
+    };
+    
+    console.log(notesLookup);
+
+//VISUALIZATION
+    
+    
+function renderChart(data, labels) {
+    $('.container').css("height","50%");
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                //label: 'This week',
+                data: data,
+                borderColor: 'rgba(0, 109, 203, 1)',
+                backgroundColor: 'rgba(0, 109, 203, 0.2)',
+            }]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        display: false //this will remove only the label
+                    },
+                    gridLines: {
+                        display:false
+                    },                    
+                }],
+                yAxes: [{
+                    ticks: {
+                        display: false,//this will remove only the label
+                        suggestedMin: 0
+                    },
+                    gridLines: {
+                        display:false,
+                        drawBorder: false,
+                    },                    
+                }]
+            },
+           tooltips: {
+              enabled: true
+            },
+           layout: {
+            padding: {
+                left: 0,
+                right: 0,
+                top: 5,
+                bottom: 0
+            }
+        }
+        },
+    });
+}
+
+$("#renderBtn").click(
+    
+    function () {
+        
+        $("#error").empty();
+        
+        //get form field values and build API URL
+        var accessKey = $('#inputAccessKey').val();
+        var secretKey = $('#inputSecretKey').val();
+        var user = $('#inputUser').val();
+        var password = $('#inputPassword').val();
+        var xApiKey = accessKey+"_"+secretKey
+        var level1 = $('#inputLevel1').val();
+        var metric = $('#selectMetric').val();
+        var period = $('#selectPeriod').val();
+        metric = metricLookup[metric];
+        
+        //API URL for calls to api.atinternet.io with access key and secret key
+        var apiUrl = "https://api.atinternet.io/data/v2/json/getData?&columns={d_time_date,"+metric+"}&sort={d_time_date}&space={s:"+level1+"}&period={R:{D:{start:%27-"+period+"%27,end:%27-1%27}}}&max-results=10000&page-num=1";
+        
+        /*API URL for calls to apirest with user and password
+        var apiUrl2 = "https://apirest.atinternet-solutions.com/data/v2/json/getData?&columns={d_time_date,"+metric+"}&sort={d_time_date}&space={s:"+level1+"}&period={R:{D:{start:%27-"+period+"%27,end:%27-1%27}}}&max-results=10000&page-num=1";
+        */
+            
+        
+        
+        console.log("API URL: " + apiUrl);
+        
+        //get API data and transform into dataInputArray
+
+          
+        // AJAX request with JQuery to call the AT Internet API
+          $.ajax({
+            xhrFields: {
+              withCredentials: false
+            },
+            headers: {
+              //'Authorization': 'Basic ' + btoa(user+':'+password)
+                'x-api-key': accessKey+"_"+secretKey
+            },
+            url: apiUrl,
+            async: false,
+            success: function(data){
+              window.metricArray = [];
+              window.dataInputArray = [];
+              window.labelDateArray = [];
+              window.metricArray = data.DataFeed[0].Rows;
+              
+              for(var i = 0; i < window.metricArray.length; i++) {
+                var obj = window.metricArray[i];
+                var dateApi = obj.d_time_date;
+                
+                if (metric == "m_visits") { 
+                var metricApi = obj.m_visits;
+                }
+                else if (metric == "m_sales") {
+                var metricApi = obj.m_sales;
+                }
+                else if (metric == "m_conversions1_visits") {
+                var metricApi = obj.m_conversions1_visits;
+                }                
+                  
+                window.dataInputArray.push(metricApi);
+                window.labelDateArray.push(dateApi);
+                  
+                }
+                
+                console.log("TEST Metric Values: " + window.dataInputArray);
+                console.log("TEST Date Values: " + window.labelDateArray);
+            },
+            error: function(){
+                $("#error").text("Something went wrong. Please check your credentials and site ID.");
+                $('#resetButton').show();
+                $('#renderBtn').hide();
+            }
+          });
+        
+        
+        var dataInputArray = window.dataInputArray;
+        var labelDateArray = window.labelDateArray;
+        
+        var maxValue = Math.max.apply(Math,dataInputArray);
+        console.log(maxValue);
+        
+        for (var i = 0; i < dataInputArray.length; i++) {
+        dataInputArray[i] /= maxValue;
+        };
+        console.log(dataInputArray);
+        
+        var x = 0;
+        var len = dataInputArray.length
+        while(x < len){ 
+        dataInputArray[x] = (Math.ceil(dataInputArray[x]*20)/20).toFixed(2) 
+        x++
+        };
+        console.log(dataInputArray);
+        
+        var labelArray = []; //basic label array with incrementing numbers
+        for (var i = 0; i < dataInputArray.length; i++) {
+        labelArray.push(i);
+        };
+        console.log(labelArray);
+        
+        
+        data = dataInputArray;
+        labels =  labelDateArray;
+        renderChart(data, labels);
+        
+        $('#resetButton').show();
+        $('#button').show();
+        $('#renderBtn').hide();
+    }
+);
+    
+    
+//SONIFICATION
+    
+
+const synth = new Tone.Synth();
+synth.oscillator.type = "sine";
+    
+//Possible base drum
+//const synth2 = new Tone.Synth();
+//synth2.oscillator.type = "sine";
+    
+
+
+
+$('#button').click(function() {
+    
+    
+  
+    
+    //get and transform input textarea
+        
+        var dataInputArray = window.dataInputArray;
+        console.log(dataInputArray);
+        var maxValue = Math.max.apply(Math,dataInputArray);
+        console.log(maxValue);
+        
+        for (var i = 0; i < dataInputArray.length; i++) {
+        dataInputArray[i] /= maxValue;
+        };
+        console.log(dataInputArray);
+        
+        var x = 0;
+        var len = dataInputArray.length
+        while(x < len){ 
+        dataInputArray[x] = (Math.ceil(dataInputArray[x]*20)/20).toFixed(2) 
+        x++
+        };
+        console.log(dataInputArray);
+        
+        var labelArray = [];
+        for (var i = 0; i < dataInputArray.length; i++) {
+        labelArray.push(i);
+        };
+        console.log(labelArray);
+
+        var notesArray = [];
+        var y = 0;
+        var len = dataInputArray.length
+        while(y < len){ 
+        notesArray.push(notesLookup[dataInputArray[y]]); 
+        y++
+        };
+        console.log("TEEST: " + notesArray);
+        console.log(typeof notesArray);
+    
+        var notesArrayNew = $.map(notesArray, function(value) {
+        return [value];
+        });
+        console.log(notesArrayNew);
+        
+    
+    //create sonification 1
+    
+        var notes = notesArrayNew;
+
+        synth.toMaster();
+
+        var synthPart = new Tone.Sequence(
+        function(time, note) {
+        synth.triggerAttackRelease(note, "10hz", time);
+        },
+        notes,
+        "8n"
+        );
+        // Setup the synth to be ready to play on beat 1
+        synthPart.start();
+        Tone.Transport.start();
+    
+    /*
+    //create sonification 2 - possible base drum
+    
+        var notes = ["C2"];
+
+        synth2.toMaster();
+
+        var synthPart2 = new Tone.Sequence(
+        function(time, note) {
+        synth2.triggerAttackRelease(note, "10hz", time);
+        },
+        notes,
+        "3m" //adjust length based on interval - every 7 days, every 24 hours etc.
+        );
+        // Setup the synth to be ready to play on beat 1
+        synthPart2.start();
+        Tone.Transport.start();
+    */
+    
+
+    $('#buttonStop').show();
+    
+});
+
+
+    
+$('#buttonStop').click(function() {
+    
+    Tone.Transport.stop();
+    location.reload();
+    
+    $('#buttonStop').hide();
+    
+});
+    
+$('#resetButton').click(function() {
+    
+    location.reload();
+    
+});
+    
+$('.clickable').click(function() {
+    
+    $("#dataInput").val(""); $("#dataInput").val("275747,135015,97409,94302,124628,279277,753083,1158584,1156551,1074031,1007986,1008916,1308273,1269229,1252731,1232826,1304631,1310581,1237473,1246388,1527150,1287406,1058643,549165,284403,132042,99161,97809,132307,288583,760824,1153498,1128034,1041607,969643,995826,1301449,1250585,1020986,1063494,1149262,1136722,1271308,1069575,1083213,1116844,1047979,556970,290645,136067,99749,97078,128438,282638,745617,1148666,1118599,999811,1187278,1008025,1513770,1295923,1027861,1043027,1169562,1262161,1091247,1099839,1557719,1255745,1103499,585878,305045,138929,102826,100483,136295,301748,784480,1198208,1193270,1096303,1006513,1067510,1366716,1299252,1070892,1100770,1191284,1212292,1112340,1090224,1169120,1213332,1125947,643848,342116,152961,110870,106688,139561,288451,754805,1268312,1290734,1156932,1020986,1012252,1403242,1283716,1084491,1077261,1129208,1153345,1029982,948633,962286,961742,896097,599985,363983,174868,114223,100515,117971,193930,423566,913721,1126561,1006210,894926,820799,831815,865937,860777,888614,948047,977336,869883,852904,845532,838592,808929,587154,361242,177284,112517,92883,99776,147695,312164,731756,1030303,983871,828530,772604,788737,789889,783600,841005,945435,1034575,1008456,1018158,981005,1009213,875019,513617");
+    
+});
+    
+    
+</script>
+    
+</body>
+
+</html>
